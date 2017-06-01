@@ -16,6 +16,7 @@ public partial class Site_Login : System.Web.UI.Page
     }
     protected void loginBtn_Click(object sender, EventArgs e)
     {
+        //This is a tests
         string username = inputUsername.Text;
         string password = inputPassword.Text;
         string message = "";

@@ -28,7 +28,7 @@
             left: 0;
             height: 100%;
             width: 100%;
-            background: rgba( 255, 255, 255, .8 ) url('animal.gif') 50% 50% no-repeat;
+            background: rgba( 255, 255, 255, .8 ) url('ring.gif') 50% 50% no-repeat;
         }
 
         body.loading {
@@ -94,17 +94,17 @@
                                         <th class="hidden"></th>
                                         <th class="text-center">Status
                                         </th>
+                                        <th class="text-left">Pipeline</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr id="addr1"></tr>
+                                    <tr id="addr1" class="text-muted active"></tr>
                                     <tr id="addr2"></tr>
                                     <tr id="addr3"></tr>
                                     <tr id="addr4"></tr>
 
                                 </tbody>
                             </table>
-
                             <%-- <asp:LinkButton ID="lbRefreshChannelTable" runat="server" Text="test" OnClick="lbRefreshChannelTable_Click" CssClass="lbRefreshChannelTable"></asp:LinkButton>
                                 </ContentTemplate>
                             </asp:UpdatePanel>--%>
@@ -113,7 +113,12 @@
                 </div>
             </div>
         </div>
+
         <hr />
+        <%--<a href="#" id="dob" data-type="combodate" data-pk="1" data-url="/post" data-value="1984-05-15" data-title="Select date" onchange="testingito();"></a>--%>
+        
+
+        
     </div>
     <div class="modal">
         <!-- Place at bottom of page -->
@@ -123,7 +128,13 @@
 
         $(document).ready(function () {
             TableInitialize();
+         
         });
+
+      
+
+       
+
         $body = $("body");
         $(document).on({
             ajaxStart: function () { $body.addClass("loading"); },
@@ -135,7 +146,6 @@
             var statustxt = $(this).closest('tr').find('td:eq(2)').text();
             UpdateChannelStatus(channelid, statustxt);
         });
-
 
         function UpdateChannelStatus(channelid, statustxt) {
 
@@ -152,8 +162,6 @@
                     alert('failed');
                 }
             });
-
-            location.reload();
             //$('#myModal').modal('toggle');
         };
         function TableInitialize() {
@@ -169,11 +177,29 @@
                     var tableSwitch = "<input type='checkbox' class='toggleswitchChannel' data-toggle='toggle' data-size='mini' data-on='Active' data-off='Disable' data-onstyle='info' data-offstyle='danger' data-style='android'";
                     $.each(result.newProdChannelStatus, function (key, value) {
                         var status_result = (value.status == 'Active') ? 'checked' : '';
-                        $('#addr' + i).html("<td class='hidden'> " + value.id + " </td><td class='text-left'>" + value.channel + "</td><td class='hidden'>" + value.status + "</td><td class='text-center'>" + tableSwitch + "" + status_result + "></td>");
+                        $('#addr' + i).html("<td class='hidden'> " + value.id + " </td><td class='text-left'>" + value.channel + "</td><td class='hidden'>" + value.status + "</td><td class='text-center'>" + tableSwitch + "" + status_result + "></td><td><a data-type='combodate' class='lb_PipelineDate'>MM.YYYY</a></td>");
                         i++;
                     });
                     $(function () {
                         $('.toggleswitchChannel').bootstrapToggle();
+                        $('.lb_PipelineDate').editable({
+                            format: 'YYYY-MM-DD',
+                            viewformat: 'MM.YYYY',
+                            template: 'MMMM / YYYY',
+                            placement : 'left',
+                            combodate: {
+                                minYear: 2000,
+                                maxYear: 2015,
+                                minuteStep: 1
+                            }
+                        });
+                        $('.lb_PipelineDate').on('hidden', function (e, reason) {
+                            if (reason === 'save') {
+                                alert('Saved value: ' + $(this).text());
+                            }
+                           // var test = $("tbody").closest('tr').find('.lb_PipelineDate').text();
+                           //alert(test);
+                        });
                     })
                     i = 1;
                 },
@@ -182,6 +208,20 @@
                 }
             });
         };
+
+        function timeConverter(UNIX_timestamp) {
+            var a = new Date(UNIX_timestamp * 1000);
+            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var year = a.getFullYear();
+            var month = months[a.getMonth()];
+            var date = a.getDate();
+            var hour = a.getHours();
+            var min = a.getMinutes();
+            var sec = a.getSeconds();
+            var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+            return time;
+        }
+
         function getParameterByName(name, url) {
             if (!url) url = window.location.href;
             name = name.replace(/[\[\]]/g, "\\$&");

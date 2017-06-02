@@ -16,7 +16,23 @@
         #tbl_BranchList tr td:last-child {
             width: 45px;
         }
-      
+
+        .hide_column {
+            display: none;
+        }
+
+        .modaltble {
+            white-space: nowrap;
+        }
+        .dataTables_scrollBody{
+            border:1px solid #ddd;
+            height:390px !important;
+        }
+
+        .modaltble>thead>tr>th {
+    border-bottom:none;
+}
+        
     </style>
     <div id="lower-navbar" class="" style="line-height: 40px; border-bottom: 1px solid #ddd;">
         <div class="container-fluid">
@@ -162,56 +178,76 @@
                     <h4 class="modal-title" id="myModalLabel">Test Add Branches</h4>
                     <%--End top left title--%>
                 </div>
-                <div class="container-fluid" style="min-height: 550px; max-height: 550px;">
-                    <div class="row" style="margin-top: 10px;">
-                        <div class="col-md-6">
-                            <input type="text" class="form-control input-sm" id="tbSearchAvailbTable" />
-                            <table class="table table-condensed table-hover small modaltble" id="tbl_AvailBranch">
-                                <thead class="">
-                                    <tr>
-                                        <th data-override="branchCode">Branch Code </th>
-                                        <th data-override="branchName">Branch Name</th>
-                                        <th class="" data-override="branchId">Branch Id</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbl_AvailBranchBody" >
-                                    <asp:Repeater ID="RptAvailableBranch" runat="server">
-                                        <ItemTemplate>
+                <div class="container-fluid">
+                    <table style="margin-top: 15px; height: 455px; width: 100%;">
+                        <tbody>
+                            <tr>
+                                <td style="width: 45%; vertical-align: top;">
+                                    <input type="text" class="form-control input-sm" id="tbSearchAvailbTable" />
+                                    <table class="table table-condensed table-striped table-hover small modaltble" id="tbl_AvailBranch">
+                                        <thead class="">
                                             <tr>
-                                                <td class="text-left"><%# DataBinder.Eval(Container.DataItem, "branchCode") %></td>
-                                                <td class="text-left"><%# DataBinder.Eval(Container.DataItem, "branchName") %></td>
-                                                <td class="text-left "><%# DataBinder.Eval(Container.DataItem, "branchId") %></td>
+                                                <th data-override="branchCode">Branch Code </th>
+                                                <th data-override="branchName">Branch Name</th>
+                                                <th class="" data-override="branchId">Branch Id</th>
                                             </tr>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                </tbody>
-                            </table>
-                        </div>
-                       <%-- <div class="col-md-2">
-                            <button type="button" class="btn btn-default btn-sm">>></button>
-                            <button type="button" class="btn btn-default btn-sm"><<</button>
-                        </div>--%>
-
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" />
-                            <table class="table table-condensed table-hover small modaltble" id="tbl_SelectedBranch">
-                                <thead class="">
-                                    <tr>
-                                        <th data-override="branchCode">Branch Code </th>
-                                        <th data-override="branchName">Branch Name</th>
-                                        <th  class="" data-override="branchId">Branch Id</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                                        </thead>
+                                        <tbody id="tbl_AvailBranchBody">
+                                            <asp:Repeater ID="RptAvailableBranch" runat="server">
+                                                <ItemTemplate>
+                                                    <tr>
+                                                        <td class="text-left"><%# DataBinder.Eval(Container.DataItem, "branchId") %></td>
+                                                        <td class="text-left"><%# DataBinder.Eval(Container.DataItem, "branchCode") %></td>
+                                                        <td class="text-left"><%# DataBinder.Eval(Container.DataItem, "branchName") %></td>
+                                                    </tr>
+                                                </ItemTemplate>
+                                            </asp:Repeater>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table class="" style="width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">
+                                                    <button id="btnSelectAll" type="button" style="width: 70px;" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-forward"></span></button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <br />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">
+                                                    <button id="btnDeselectAll" type="button" style="width: 70px;" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-backward"></span></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td style="width: 45%; vertical-align: top;">
+                                    <input type="text" class="form-control input-sm" id="tbSearchSelectedTable" />
+                                    <table class="table table-condensed table-striped table-hover small modaltble" id="tbl_SelectedBranch">
+                                        <thead class="">
+                                            <tr>
+                                                <th class="" data-override="branchId">Branch Id</th>
+                                                <th data-override="branchCode">Branch Code</th>
+                                                <th data-override="branchName">Branch Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" style="margin-top: 10px;">
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary btn-sm">Submit</button>
+                        <button id="btnSubmitDualList" type="button" class="btn btn-primary btn-sm">Submit</button>
                     </div>
                 </div>
             </div>
@@ -282,47 +318,67 @@
         $(document).ready(function () {
             populateBranchName("#branchselect0");
             populateBranchNametbl("#tbl_AvailBranchBody");
-           
-            //$('#tbl_AvailBranch').DataTable({
-            //    dom: 't',
-            //    info: false,
-            //    scrollY: '400px',
-            //    scrollCollapse: true,
-            //    paging: false,
-            //    searching: false,
-            //});
         });
 
         $('table.modaltble').DataTable({
             paging: false,
             ordering: true,
-            info: false,
+            info: true,
             dom: 't',
             searching: true,
-            scrollY: '400px',
+            scrollY: '390px',
             scrollCollapse: true,
             "language": {
-                "emptyTable": "No Data Available",
-            }
+                "emptyTable": "No Data Available"
+            },
+            "columnDefs": [
+   { className: "hide_column", "targets": [0] }
+            ]
         });
+
+        //search textbox
         $('#tbSearchAvailbTable').on('keyup', function () {
             $('#tbl_AvailBranch').DataTable().search(this.value).draw();
         });
-        $('#myModal').on('shown.bs.modal', function (e) {
-            $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+        $('#tbSearchSelectedTable').on('keyup', function () {
+            $('#tbl_SelectedBranch').DataTable().search(this.value).draw();
         });
 
-
-
-        $('#tbl_AvailBranch tbody').on('dblclick', 'tr', function () {
-            //var selectedbranchid = $(this).find('label').html();
-            //alert($(this).find('td').next('td').next('td').text());
-
+        //row select transfer to another tble
+        $('#tbl_AvailBranch tbody').on('click', 'tr', function () {
             var $row = $(this);
             var addRow = $('#tbl_AvailBranch').DataTable().row($row);
             $('#tbl_SelectedBranch').DataTable().row.add(addRow.data()).draw();
             addRow.remove().draw();
         });
+        $('#tbl_SelectedBranch tbody').on('click', 'tr', function () {
+            var $row = $(this);
+            var addRow = $('#tbl_SelectedBranch').DataTable().row($row);
+            $('#tbl_AvailBranch').DataTable().row.add(addRow.data()).draw();
+            addRow.remove().draw();
+        });
+
+        //button Select All and Deselect All
+        $('#btnSelectAll').click(function () {
+            var count = $("#tbl_AvailBranch").dataTable().fnSettings().aoData.length;
+            if (count != 0) {
+                $('#tbl_SelectedBranch').dataTable().fnAddData($('#tbl_AvailBranch').dataTable().fnGetData());
+                $('#tbl_AvailBranch').dataTable().fnClearTable();
+            }
+        });
+        $('#btnDeselectAll').click(function () {
+            var count = $("#tbl_SelectedBranch").dataTable().fnSettings().aoData.length;
+            if (count != 0) {
+                $('#tbl_AvailBranch').dataTable().fnAddData($('#tbl_SelectedBranch').dataTable().fnGetData());
+                $('#tbl_SelectedBranch').dataTable().fnClearTable();
+            }
+        });
+        //
+        $('#myModal').on('shown.bs.modal', function (e) {
+            $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+        });
+
+
 
 
 
@@ -379,6 +435,15 @@
             location.reload();
         });
 
+        $('#btnSubmitDualList').click(function () {
+            var tblselectedbranch = $('#tbl_SelectedBranch').tableToJSON({
+                ignoreEmptyRows: true,
+            });
+            submittedBranchName(tblselectedbranch);
+            location.reload();
+        });
+
+        
 
         function resetTable() {
             $('#tbl_BranchList').find("tr:gt(0)").remove();

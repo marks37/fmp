@@ -20,8 +20,13 @@ public partial class newproduct : System.Web.UI.Page
         }
         if (!IsPostBack)
         {
-         BindTable();
+            BindTable();
         }
+
+        string userid = user.Id;
+        List<clsChannel> ChannelBranchList = DBLayer.getChannelBrandById(userid);
+        RptSetSaturation.DataSource = ChannelBranchList;
+        RptSetSaturation.DataBind();
     }
     protected void newProdRptr_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
@@ -46,20 +51,20 @@ public partial class newproduct : System.Web.UI.Page
     }
     protected void btnAddSaturation_Click(object sender, EventArgs e)
     {
-        string channelbrandid = Request["ddlChannelBrand"];
-        string pipelinedate = tbPipeLineDate.Text;
-        string saturationdate = tbSaturationDate.Text;
-        string remarks = tbRemarks.Text;
-        clsChannel newSaturation = new clsChannel();
-        newSaturation.id = channelbrandid;
-        newSaturation.pipeline_period = pipelinedate;
-        newSaturation.saturation_period = saturationdate;
-        newSaturation.remarks = remarks;
-        newSaturation.created_at = DBLayer.GetCurrentTime().ToString();
-        newSaturation.created_by = user.Id;
-        DBLayer.UpdateSaturationBYChannelBrandId(newSaturation);
-        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "closeModal();populateDdlChannelBranch('#ddlChannelBrand');", true);
-        BindTable();
+        //string channelbrandid = Request["ddlChannelBrand"];
+        //string pipelinedate = tbPipeLineDate.Text;
+        //string saturationdate = tbSaturationDate.Text;
+        //string remarks = tbRemarks.Text;
+        //clsChannel newSaturation = new clsChannel();
+        //newSaturation.id = channelbrandid;
+        //newSaturation.pipeline_period = pipelinedate;
+        //newSaturation.saturation_period = saturationdate;
+        //newSaturation.remarks = remarks;
+        //newSaturation.created_at = DBLayer.GetCurrentTime().ToString();
+        //newSaturation.created_by = user.Id;
+        //DBLayer.UpdateSaturationBYChannelBrandId(newSaturation);
+        //ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "script", "closeModal();populateDdlChannelBranch('#ddlChannelBrand');", true);
+        //BindTable();
     }
     public void BindTable()
     {
@@ -87,15 +92,21 @@ public partial class newproduct : System.Web.UI.Page
     }
 
 
-    //[System.Web.Services.WebMethod]
-    //public static object LoadDetail()
-    //{
-        
-    //    List<clsNewProduct> test = 
-    //    string json = JsonConvert.SerializeObject(new { ChannelBranchList });
-    //    return json;
-    //}
+    [System.Web.Services.WebMethod]
+    public static object SetSaturation(string channelBrandId, string PipelineDate, string EndSaturationDate, string ChannelBrandRemarks)
+    {
+        clsUser user = (clsUser)HttpContext.Current.Session["user"];
+        clsChannel newSaturation = new clsChannel();
+        newSaturation.id = channelBrandId;
+        newSaturation.pipeline_period = PipelineDate;
+        newSaturation.saturation_period = EndSaturationDate;
+        newSaturation.remarks = ChannelBrandRemarks;
+        newSaturation.created_at = DBLayer.GetCurrentTime().ToString();
+        newSaturation.created_by = user.Id;
+        DBLayer.UpdateSaturationBYChannelBrandId(newSaturation);
+        return "newproduct_detail?NewProduct=" + channelBrandId;
+    }
 
- 
-    
+
+
 }

@@ -24,15 +24,6 @@
         .modaltble {
             white-space: nowrap;
         }
-        .dataTables_scrollBody{
-            border:1px solid #ddd;
-            height:390px !important;
-        }
-
-        .modaltble>thead>tr>th {
-    border-bottom:none;
-}
-        
     </style>
     <div id="lower-navbar" class="" style="line-height: 40px; border-bottom: 1px solid #ddd;">
         <div class="container-fluid">
@@ -179,10 +170,10 @@
                     <%--End top left title--%>
                 </div>
                 <div class="container-fluid">
-                    <table style="margin-top: 15px; height: 455px; width: 100%;">
+                    <table>
                         <tbody>
                             <tr>
-                                <td style="width: 45%; vertical-align: top;">
+                                <td>
                                     <input type="text" class="form-control input-sm" id="tbSearchAvailbTable" />
                                     <table class="table table-condensed table-striped table-hover small modaltble" id="tbl_AvailBranch">
                                         <thead class="">
@@ -210,23 +201,16 @@
                                         <tbody>
                                             <tr>
                                                 <td class="text-center">
-                                                    <button id="btnSelectAll" type="button" style="width: 70px;" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-forward"></span></button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <br />
-                                                </td>
+                                                    <button type="button" class="btn btn-default btn-sm">>></button></td>
                                             </tr>
                                             <tr>
                                                 <td class="text-center">
-                                                    <button id="btnDeselectAll" type="button" style="width: 70px;" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-backward"></span></button>
-                                                </td>
+                                                    <button type="button" class="btn btn-default btn-sm">>></button></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </td>
-                                <td style="width: 45%; vertical-align: top;">
+                                <td>
                                     <input type="text" class="form-control input-sm" id="tbSearchSelectedTable" />
                                     <table class="table table-condensed table-striped table-hover small modaltble" id="tbl_SelectedBranch">
                                         <thead class="">
@@ -247,7 +231,7 @@
                 <div class="modal-footer" style="margin-top: 10px;">
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
-                        <button id="btnSubmitDualList" type="button" class="btn btn-primary btn-sm">Submit</button>
+                        <button type="button" class="btn btn-primary btn-sm">Submit</button>
                     </div>
                 </div>
             </div>
@@ -318,12 +302,21 @@
         $(document).ready(function () {
             populateBranchName("#branchselect0");
             populateBranchNametbl("#tbl_AvailBranchBody");
+
+            //$('#tbl_AvailBranch').DataTable({
+            //    dom: 't',
+            //    info: false,
+            //    scrollY: '400px',
+            //    scrollCollapse: true,
+            //    paging: false,
+            //    searching: false,
+            //});
         });
 
         $('table.modaltble').DataTable({
             paging: false,
             ordering: true,
-            info: true,
+            info: false,
             dom: 't',
             searching: true,
             scrollY: '390px',
@@ -351,6 +344,7 @@
             $('#tbl_SelectedBranch').DataTable().row.add(addRow.data()).draw();
             addRow.remove().draw();
         });
+
         $('#tbl_SelectedBranch tbody').on('click', 'tr', function () {
             var $row = $(this);
             var addRow = $('#tbl_SelectedBranch').DataTable().row($row);
@@ -358,21 +352,6 @@
             addRow.remove().draw();
         });
 
-        //button Select All and Deselect All
-        $('#btnSelectAll').click(function () {
-            var count = $("#tbl_AvailBranch").dataTable().fnSettings().aoData.length;
-            if (count != 0) {
-                $('#tbl_SelectedBranch').dataTable().fnAddData($('#tbl_AvailBranch').dataTable().fnGetData());
-                $('#tbl_AvailBranch').dataTable().fnClearTable();
-            }
-        });
-        $('#btnDeselectAll').click(function () {
-            var count = $("#tbl_SelectedBranch").dataTable().fnSettings().aoData.length;
-            if (count != 0) {
-                $('#tbl_AvailBranch').dataTable().fnAddData($('#tbl_SelectedBranch').dataTable().fnGetData());
-                $('#tbl_SelectedBranch').dataTable().fnClearTable();
-            }
-        });
         //
         $('#myModal').on('shown.bs.modal', function (e) {
             $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
@@ -435,15 +414,6 @@
             location.reload();
         });
 
-        $('#btnSubmitDualList').click(function () {
-            var tblselectedbranch = $('#tbl_SelectedBranch').tableToJSON({
-                ignoreEmptyRows: true,
-            });
-            submittedBranchName(tblselectedbranch);
-            location.reload();
-        });
-
-        
 
         function resetTable() {
             $('#tbl_BranchList').find("tr:gt(0)").remove();

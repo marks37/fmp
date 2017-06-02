@@ -360,7 +360,7 @@
             i++;
             $("#select0 option[value='" + selectedacctgrp + "']").prop('disabled', true);
             $("#select0").select2({
-                placeholder: "Select channel",
+                placeholder: "Select Account Group",
                 theme: "bootstrap",
                 width: 'resolve',
                 closeOnSelect: true,

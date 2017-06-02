@@ -91,7 +91,6 @@ public partial class devchild_saturation : System.Web.UI.Page
             branch.newproductaccountid = newProductAcctGrpId;
             branch.status = "Pending";
         }
-
         DBLayer.insertBranchSelect(BranchSelect);
         return "";
     }

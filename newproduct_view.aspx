@@ -28,7 +28,7 @@
             left: 0;
             height: 100%;
             width: 100%;
-            background: rgba( 255, 255, 255, .8 ) url('animal.gif') 50% 50% no-repeat;
+            background: rgba( 255, 255, 255, .8 ) url('ring.gif') 50% 50% no-repeat;
         }
 
         body.loading {
@@ -94,6 +94,7 @@
                                         <th class="hidden"></th>
                                         <th class="text-center">Status
                                         </th>
+                                        <th class="text-left">Pipeline</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -104,7 +105,6 @@
 
                                 </tbody>
                             </table>
-
                             <%-- <asp:LinkButton ID="lbRefreshChannelTable" runat="server" Text="test" OnClick="lbRefreshChannelTable_Click" CssClass="lbRefreshChannelTable"></asp:LinkButton>
                                 </ContentTemplate>
                             </asp:UpdatePanel>--%>
@@ -113,6 +113,7 @@
                 </div>
             </div>
         </div>
+
         <hr />
     </div>
     <div class="modal">
@@ -124,6 +125,24 @@
         $(document).ready(function () {
             TableInitialize();
         });
+
+        $(function () {
+            $('#dob').editable({
+                format: 'YYYY-MM-DD',
+                viewformat: '.MM.YYYY',
+                template: 'MM / YYYY',
+                
+                //combodate: {
+                //    minYear: 2000,
+                //    maxYear: 2015,
+                //    minuteStep: 1
+                //}
+            });
+        });
+        $('#save-btn').click(function () {
+            alert();
+        });
+
         $body = $("body");
         $(document).on({
             ajaxStart: function () { $body.addClass("loading"); },
@@ -169,7 +188,7 @@
                     var tableSwitch = "<input type='checkbox' class='toggleswitchChannel' data-toggle='toggle' data-size='mini' data-on='Active' data-off='Disable' data-onstyle='info' data-offstyle='danger' data-style='android'";
                     $.each(result.newProdChannelStatus, function (key, value) {
                         var status_result = (value.status == 'Active') ? 'checked' : '';
-                        $('#addr' + i).html("<td class='hidden'> " + value.id + " </td><td class='text-left'>" + value.channel + "</td><td class='hidden'>" + value.status + "</td><td class='text-center'>" + tableSwitch + "" + status_result + "></td>");
+                        $('#addr' + i).html("<td class='hidden'> " + value.id + " </td><td class='text-left'>" + value.channel + "</td><td class='hidden'>" + value.status + "</td><td class='text-center'>" + tableSwitch + "" + status_result + "></td><td></td>");
                         i++;
                     });
                     $(function () {

@@ -120,23 +120,55 @@
 
     <!-- Modal-->
     <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                <ContentTemplate>
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <%--X button at top right--%>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <%--End X button--%>
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <%--X button at top right--%>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <%--End X button--%>
 
-                            <%--Top left title--%>
-                            <h4 class="modal-title">Set Saturation</h4>
-                            <%--End top left title--%>
-                        </div>
-                        <div class="modal-body" id="">
-                            <div class="row">
+                    <%--Top left title--%>
+                    <h4 class="modal-title">Set Saturation</h4>
+                    <%--End top left title--%>
+                </div>
+                <div class="modal-body" id="">
+                    <div class="form-group" style="width: 100%;">
+                        <input type="text" id="tbSetSaturation_Filter" class="form-control" placeholder="Search....." style="width: 100%;" />
+                    </div>
+                    <table class="table table-bordered table-condensed table-hover" id="tbl_SetSaturation">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="text-left hidden">Id</th>
+                                <th class="text-left">Channel</th>
+                                <th class="text-left">Item Code</th>
+                                <th class="text-left">Item Name</th>
+                                <th class="text-left">Glu</th>
+                                <th class="text-left hidden">Division</th>
+                                <th class="text-left">Price / Uom</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <asp:Repeater ID="RptSetSaturation" runat="server">
+                                <ItemTemplate>
+                                    <tr>
+                                        <td class="text-center">
+                                            <input type="checkbox" class="chkboxModalSetSaturation" /></td>
+                                        <td class="text-left hidden"><%# DataBinder.Eval(Container.DataItem, "id") %></td>
+                                        <td class="text-left"><%# DataBinder.Eval(Container.DataItem, "channel") %></td>
+                                        <td class="text-left"><%# DataBinder.Eval(Container.DataItem, "item_code") %></td>
+                                        <td class="text-left"><%# DataBinder.Eval(Container.DataItem, "itemname") %></td>
+                                        <td class="text-left"><%# DataBinder.Eval(Container.DataItem, "glu") %></td>
+                                        <td class="text-left hidden"><%# DataBinder.Eval(Container.DataItem, "product_division") %></td>
+                                        <td class="text-left"><%# DataBinder.Eval(Container.DataItem, "price_net") %> / <%# DataBinder.Eval(Container.DataItem, "uom") %></td>
+                                    </tr>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </tbody>
+                    </table>
+                    <%-- <div class="row">
                                 <div class="col-md-12">
                                     <div class="new_product_form">
                                         <div class="form-group">
@@ -145,36 +177,57 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Pipeline Date</label>
-                                            <%--<input  id='PipeLineDate' type="date"  class='form-control input-md'/>--%>
                                             <asp:TextBox ID="tbPipeLineDate" runat="server" placeholder="mm / yyyy" CssClass="form-control input-md StartDate"></asp:TextBox>
                                         </div>
 
                                         <div class="form-group">
                                             <label class="control-label">End Saturation Date</label>
-                                            <%--<input  id='SaturationDate' type="date"  class='form-control input-md'/>--%>
                                             <asp:TextBox ID="tbSaturationDate" runat="server" placeholder="mm / yyyy" CssClass="form-control input-md EndDate"></asp:TextBox>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Remarks</label>
-                                            <%--<input id='tbRemarks' type="text"  class='form-control input-md'/>--%>
                                             <asp:TextBox ID="tbRemarks" runat="server" CssClass="form-control input-md"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="btn-group" role="group">
-                                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
-                                <%--<button id="btnAddSaturation" type="button" class="btn btn-primary btn-sm">Create</button>--%>
-                                <asp:LinkButton ID="btnAddSaturation" runat="server" CssClass="btn btn-primary btn-sm" OnClick="btnAddSaturation_Click">Create</asp:LinkButton>
-                            </div>
-                        </div>
-                    </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+                            </div>--%>
+                </div>
+                <div class="modal-footer">
+                    <table class="" style="width: 100%;">
+                        <tr>
+                            <td class="text-left col-lg-9" style="padding-bottom: 10px;">
+                                <div class="form-inline">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-addon">Pipeline</div>
+                                        <input id="tbPipeLineDate" placeholder="mm / yyyy" disabled="disabled" class="form-control StartDate" />
+                                    </div>
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-addon">End Saturation</div>
+                                        <input id="tbSaturationDate" placeholder="mm / yyyy" disabled="disabled" class="form-control EndDate" />
+                                    </div>
+                                </div>
 
-
+                            </td>
+                            <td class=" col-lg-12" style=""></td>
+                        </tr>
+                        <tr>
+                            <td class="text-left col-lg-9" style="">
+                                <div class="input-group input-group-sm" style="width: 510px;">
+                                    <div class="input-group-addon">Remarks</div>
+                                    <input id="tbRemarks" placeholder="Remarks..." class="form-control" disabled="disabled" />
+                                </div>
+                            </td>
+                            <td class="col-lg-3" style="">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Cancel</button>
+                                    <button id="btnAddSaturation" type="button" disabled="disabled" class="btn btn-primary btn-sm">Create</button>
+                                    <%--<asp:LinkButton ID="btnAddSaturation" runat="server" CssClass="btn btn-primary btn-sm" OnClick="btnAddSaturation_Click">Create</asp:LinkButton>--%>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <!-- End Modal -->
@@ -206,17 +259,14 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Pipeline Date</label>
-                                            <%--<input  id='PipeLineDate' type="date"  class='form-control input-md'/>--%>
                                             <asp:TextBox ID="Modal2tbPipeLineDate" runat="server" CssClass="form-control input-sm StartDate"></asp:TextBox>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">End Saturation Date</label>
-                                            <%--<input  id='SaturationDate' type="date"  class='form-control input-md'/>--%>
                                             <asp:TextBox ID="Modal2tbSaturationDate" runat="server" CssClass="form-control input-md EndDate"></asp:TextBox>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Remarks</label>
-                                            <%--<input id='tbRemarks' type="text"  class='form-control input-md'/>--%>
                                             <asp:TextBox ID="Modal2tbRemarks" runat="server" CssClass="form-control input-md"></asp:TextBox>
                                         </div>
                                     </div>
@@ -259,9 +309,87 @@
                 var keywords = $('#tablesearch').text;
                 $('#newproducts_tbl').DataTable().search(this.value).draw();
             });
-            populateDdlChannelBranch('#ddlChannelBrand');
+            //populateDdlChannelBranch('#ddlChannelBrand');
         });
-       
+
+        var table = $('#tbl_SetSaturation').DataTable({
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "dom": 't',
+            scrollY: 300,
+            scrollCollapse: true,
+            "language": {
+                "emptyTable": "No data available",
+            }
+        });
+
+        $('#tbSetSaturation_Filter').on('keyup', function () {
+            //var keywords = $('#product_filter').text;
+            $('#tbl_SetSaturation').DataTable().search(this.value).draw();
+        });
+        $('#myModal').on('shown.bs.modal', function (e) {
+            $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+            modalFormReset();
+        });
+        $('#tbl_SetSaturation tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('info')) {
+                $(this).removeClass('info');
+                $(this).find('input[type=checkbox]').prop('checked', false);
+                $('#tbPipeLineDate').prop('disabled', true);
+                $('#tbSaturationDate').prop('disabled', true);
+                $('#tbRemarks').prop('disabled', true);
+                $('#tbPipeLineDate').val('');
+                $('#tbSaturationDate').val('');
+                $('#tbRemarks').val('').trigger('change')
+            }
+            else {
+                table.$('tr.info').find('input[type=checkbox]').prop('checked', false);
+                table.$('tr.info').removeClass('info');
+                $(this).addClass('info');
+                $(this).find('input[type=checkbox]').prop('checked', true);
+                $('#tbPipeLineDate').prop('disabled', false);
+                $('#tbSaturationDate').prop('disabled', false);
+                $('#tbRemarks').prop('disabled', false);
+            }
+            ModalFormValidation();
+        });
+        $('#btnAddSaturation').click(function () {
+            var channelBrandId = $('#tbl_SetSaturation tr td :checkbox:checked').map(function () {
+                return $(this).closest('tr').find('td').eq(1).text()
+            }).get();
+            var PipelineDate = $('#tbPipeLineDate').val();
+            var EndSaturationDate = $('#tbSaturationDate').val();
+            var ChannelBrandRemarks = $('#tbRemarks').val();
+            $.ajax({
+                type: "POST",
+                url: "newproduct.aspx/SetSaturation",
+                data: "{ channelBrandId: '" + channelBrandId + "',\
+                        PipelineDate: '" + PipelineDate + "',\
+                        EndSaturationDate: '" + EndSaturationDate + "',\
+                        ChannelBrandRemarks: '" + ChannelBrandRemarks + "' }",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (res) {
+                    //if (data.success) {
+                    window.location.href = res.d;
+                    //}
+                },
+                failure: function (response) {
+                    alert('failed');
+                }
+            });
+        });
+        $('#tbPipeLineDate').change(function () {
+            ModalFormValidation();
+        })
+        $('#tbSaturationDate').change(function () {
+            ModalFormValidation();
+        })
+
+
+
+
         var startDate = new Date();
         var FromEndDate = new Date();
         $('.StartDate').datepicker({
@@ -277,13 +405,13 @@
             autoclose: true,
             minViewMode: 1,
             format: 'mm/yyyy',
-            
+
         }).on('changeDate', function (selected) {
             FromEndDate = new Date(selected.date.valueOf());
             //FromEndDate.setMonth(FromEndDate.getMonth(new Date(selected.date.valueOf())));
             $('.StartDate').datepicker('setEndDate', FromEndDate);
         });
-      
+
 
         $('#ddlChannelBrand').on('change', function () {
             tableValidation();
@@ -317,6 +445,7 @@
             //});
         });
 
+      
 
         function closeModal() {
             $('#myModal').modal('hide');
@@ -392,12 +521,31 @@
             modalFormReset();
         };
         function modalFormReset() {
-            $('#ContentPlaceHolder1_tbPipeLineDate').val(null);
-            $('#ContentPlaceHolder1_tbSaturationDate').val(null);
-            $('#ContentPlaceHolder1_tbRemarks').val(null);
-            $('#ContentPlaceHolder1_btnAddSaturation').attr('disabled', 'true');
+            //$('#ContentPlaceHolder1_tbPipeLineDate').val(null);
+            //$('#ContentPlaceHolder1_tbSaturationDate').val(null);
+            //$('#ContentPlaceHolder1_tbRemarks').val(null);
+            //$('#ContentPlaceHolder1_btnAddSaturation').attr('disabled', 'true');
+
+            $('#tbPipeLineDate').val(null);
+            $('#tbSaturationDate').val(null);
+            $('#tbRemarks').val(null);
+            $('#btnAddSaturation').attr('disabled', 'true');
         }
 
+
+
+
+   
+        function ModalFormValidation() {
+            var Pipeline = $('#tbPipeLineDate').val();
+            var EndSaturation = $('#tbSaturationDate').val();
+            if (Pipeline != '' && EndSaturation != '') {
+                $('#btnAddSaturation').prop('disabled', false);
+            }
+            else {
+                $('#btnAddSaturation').prop('disabled', true);
+            }
+        }
 
         //function CreateSaturation() {
         //    var channelbrandid = $('#ddlChannelBrand').val();

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Saturation_Database" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=F0LUYNF-ULMA-L\;Initial Catalog=Saturation_Database;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Saturation_DatabaseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Ref_UL_Item" Member="Ref_UL_Items">
+    <Type Name="Ref_UL_Item">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="item_code" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="item_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="base_tag" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="classification" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="class" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="division_code" Type="System.String" DbType="VarChar(3) NOT NULL" CanBeNull="false" />
+      <Column Name="division_name" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="glu_cluster_code" Type="System.String" DbType="Char(4)" CanBeNull="true" />
+      <Column Name="glu_cluster_name" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="glu_sub_group" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="glu_code" Type="System.String" DbType="Char(4)" CanBeNull="true" />
+      <Column Name="glu_name" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="category_code" Type="System.String" DbType="Char(2) NOT NULL" CanBeNull="false" />
+      <Column Name="category_name" Type="System.String" DbType="VarChar(35)" CanBeNull="true" />
+      <Column Name="sub_brand_code" Type="System.String" DbType="VarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="sub_brand_name" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="brand_code" Type="System.String" DbType="Char(3)" CanBeNull="true" />
+      <Column Name="brand_name" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="franchise_code" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="franchise_name" Type="System.String" DbType="VarChar(35)" CanBeNull="true" />
+      <Column Name="segment_code" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="segment_name" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="sub_segment_code" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="sub_segment_name" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="molecule_code" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="molecule_name" Type="System.String" DbType="VarChar(255)" CanBeNull="true" />
+      <Column Name="cluster_code" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
+      <Column Name="cluster_name" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="item_status" Type="System.String" DbType="Char(2) NOT NULL" CanBeNull="false" />
+      <Column Name="item_status_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="class_name" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="line_name" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>
